@@ -1,0 +1,4 @@
+- This is my own workings from 'https://doc.rust-lang.org/rust-by-example/'
+- If you are reading this, welcome! I presume you are a recruiter but I may be mistaken
+- I am mainly using this to keep myself busy, learn Rust as it seems interesting, remind myself how to use VIM, and refresh how to use git
+- All the best, Nova Foster (They/She)
