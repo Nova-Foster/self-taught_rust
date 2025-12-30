@@ -1,0 +1,3 @@
+[submodule "git-flowchart"]
+	path = git-flowchart
+	url = https://github.com/ewensmith/git-flowchart
