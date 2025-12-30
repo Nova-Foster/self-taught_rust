@@ -1,0 +1,71 @@
+// Library declaration similar to both Python and C++
+// Non standard libs need to be added in cargo.toml
+use std::io;
+use rand::Rng;
+use std::cmp::Ordering;
+
+fn main(){
+    println!("Guess the number!");
+
+// Loop without a condition, like a while(True):
+    loop {
+        // RNG local to current thread, seeded by OS
+        // Range x to y inclusive x..=y
+        let secret_num = rand::thread_rng().gen_range(1..=100);
+        println!("[debug] The number was {secret_num}");
+
+
+        println!("Please input you guess...");
+        // Let for variable creation
+        // Mut  -> Mutable (able to change & covered in next chapter
+        // String::new()    -> New empty string. Suppose string lib is included by default so no need to 'Use'
+        let mut guess = String::new();
+
+        // io::stdin() to expect input
+        io::stdin()
+            // .read_line(&mut guess)    ->  input as reading a line, & for reference so variable isn't copied
+            //                              into memory, need mut as refs are immutable by default
+            .read_line(&mut guess)
+            // Expect for error handling. WILL COMPILE w/ WARNING without
+            .expect("Failed to read your guess");
+
+
+        // Supports variable printing, like f strings in Python
+        println!("You guessed: {guess}");
+        println!("The number was: {secret_num}");
+
+
+        // Currently guess is a string but cmp needs it to be an int to compare to secret
+        // 'Shadows' guess into unsigned 32 int w/ trim to remove whitespace, parse to convert
+        //          numerical string into int, expect to return err on fail and output warning
+    
+        /* Version that leads to crashing on fail
+        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        */
+
+        // Alternative to expect() above. Matches 'Result' Type:
+        //  Ok(trimmed and parsed is a num) =>  continue loop with that num
+        //  Err(anything else) =>               move onto next iteration
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                continue;
+                println!("Please enter a number!");
+            }
+        };
+
+        // match is a built in comparison feature, feels like select case
+        // Ordering compares, different syntax but otherwise simple
+        //
+        // Suppose => is equiv to ==
+        // Surround things in {} for multi part executions on condition
+        match guess.cmp(&secret_num){
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal =>{
+                println!("Equal, you win!");
+                break;
+            }
+        }
+    }
+}
