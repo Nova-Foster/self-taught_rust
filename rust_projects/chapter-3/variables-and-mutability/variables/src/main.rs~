@@ -1,0 +1,9 @@
+fn main() {
+    // Immutable is like a Python constant BUT can be redefined by the same name later
+    // Mutable is a variable
+    // Const is immutable & can't be redefined later
+    let x = 5;
+    println!("x = {x}");
+    let mut x = 6;
+    println!("x = {x}");
+}
